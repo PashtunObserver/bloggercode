@@ -1,7 +1,7 @@
 /**
  * ============================================
  * ROBOTS.TXT GENERATOR - JAVASCRIPT MODULE
- * Prefix: rbxGen_
+ * Prefix: rbxGen_ 
  * Scope: Self-contained, conflict-free
  * ============================================
  */
