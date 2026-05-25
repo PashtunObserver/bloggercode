@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMX Two-Step Timer Component</title>
+    <style>
+        /* ============================================
+           TMX COMPONENT - FULLY NAMESPACED STYLES
+           Prefix: tmx-
+           ============================================ */
+
+        /* --- Reset & Base (scoped to component) --- */
+        .tmx-component-root {
+            --tmx-primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --tmx-secondary-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+            --tmx-success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --tmx-neutral-100: #f3f4f6;
+            --tmx-neutral-200: #e5e7eb;
+            --tmx-neutral-400: #9ca3af;
+            --tmx-neutral-600: #4b5563;
+            --tmx-neutral-800: #1f2937;
+            --tmx-neutral-900: #111827;
+            --tmx-white: #ffffff;
+            --tmx-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --tmx-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --tmx-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --tmx-radius-md: 0.75rem;
+            --tmx-radius-lg: 1rem;
+            
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .tmx-component-root *,
+        .tmx-component-root *::before,
+        .tmx-component-root *::after {
+            box-sizing: border-box;
+        }
+
+        /* --- Layout Wrappers --- */
+        .tmx-embed-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--tmx-white);
+            border-radius: var(--tmx-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--tmx-shadow-lg);
+        }
+
+        .tmx-step-wrapper {
+            width: 100%;
+            position: relative;
+        }
+
+        .tmx-step-content {
+            padding: 2rem 1.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .tmx-step-content {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* --- Typography --- */
+        .tmx-step-heading {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--tmx-neutral-900);
+            text-align: center;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .tmx-step-description {
+            font-size: 0.95rem;
+            color: var(--tmx-neutral-600);
+            text-align: center;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 640px) {
+            .tmx-step-heading {
+                font-size: 1.1rem;
+            }
+            .tmx-step-description {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* --- Countdown Banner --- */
+        .tmx-countdown-banner {
+            width: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            color: var(--tmx-white);
+            font-size: 1.05rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            min-height: 56px;
+        }
+
+        .tmx-countdown-banner.tmx-is-visible {
+            display: flex;
+        }
+
+        .tmx-countdown-banner.tmx-state-primary {
+            background: var(--tmx-primary-gradient);
+        }
+
+        .tmx-countdown-banner.tmx-state-secondary {
+            background: var(--tmx-secondary-gradient);
+        }
+
+        .tmx-countdown-banner.tmx-state-success {
+            background: var(--tmx-success-gradient);
+        }
+
+        /* Progress fill overlay */
+        .tmx-countdown-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--tmx-progress-width, 100%);
+            background: rgba(255, 255, 255, 0.15);
+            transition: width 1s linear;
+            z-index: 1;
+        }
+
+        .tmx-countdown-icon {
+            font-size: 1.25rem;
+            line-height: 1;
+            position: relative;
+            z-index: 2;
+            animation: tmx-pulse-animation 1.5s ease-in-out infinite;
+        }
+
+        .tmx-countdown-text {
+            position: relative;
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        @keyframes tmx-pulse-animation {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.92); }
+        }
+
+        /* --- Action Buttons --- */
+        .tmx-action-button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.125rem 1.5rem;
+            border: none;
+            border-radius: var(--tmx-radius-md);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tmx-action-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--tmx-shadow-lg);
+            filter: brightness(1.05);
+        }
+
+        .tmx-action-button:active:not(:disabled) {
+            transform: translateY(0);
+            filter: brightness(0.98);
+        }
+
+        .tmx-action-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.75;
+            filter: grayscale(0.3);
+        }
+
+        .tmx-action-button.tmx-variant-primary {
+            background: var(--tmx-primary-gradient);
+            color: var(--tmx-white);
+        }
+
+        .tmx-action-button.tmx-variant-secondary {
+            background: var(--tmx-secondary-gradient);
+            color: var(--tmx-white);
+        }
+
+        .tmx-action-button.tmx-variant-completed {
+            background: var(--tmx-success-gradient);
+            color: var(--tmx-white);
+        }
+
+        .tmx-button-icon {
+            font-size: 1.2rem;
+            line-height: 1;
+            display: inline-flex;
+        }
+
+        .tmx-button-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--tmx-white);
+            border-radius: 50%;
+            animation: tmx-spin-animation 0.8s linear infinite;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        .tmx-action-button:disabled .tmx-button-spinner {
+            display: inline-block;
+        }
+
+        .tmx-action-button:disabled .tmx-button-icon {
+            display: none;
+        }
+
+        @keyframes tmx-spin-animation {
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- Success Message --- */
+        .tmx-success-notification {
+            width: 100%;
+            display: none;
+            padding: 1rem 1.5rem;
+            background: var(--tmx-success-gradient);
+            color: var(--tmx-white);
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .tmx-success-notification.tmx-is-visible {
+            display: block;
+        }
+
+        /* --- Divider --- */
+        .tmx-section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--tmx-neutral-200);
+            margin: 0;
+        }
+
+        /* --- Scroll Target Offset --- */
+        .tmx-scroll-anchor {
+            scroll-margin-top: 24px;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- 
+    ============================================================
+    TMX TWO-STEP TIMER COMPONENT
+    ============================================================
+    Embed this entire block into your Blogger/WordPress post.
+    All classes, IDs, and JS are prefixed with 'tmx' to prevent
+    conflicts with existing site scripts and styles.
+    ============================================================
+    -->
+
+    <div class="tmx-component-root">
+        <div class="tmx-embed-wrapper">
+
+            <!-- STEP ONE -->
+            <div class="tmx-step-wrapper" id="tmx_step_one_container">
+                
+                <!-- Countdown Banner Step 1 -->
+                <div class="tmx-countdown-banner tmx-state-primary" id="tmx_banner_step_one">
+                    <span class="tmx-countdown-icon">⏱️</span>
+                    <span class="tmx-countdown-text" id="tmx_text_step_one">Please wait: 30 seconds remaining</span>
+                </div>
+
+                <!-- Content -->
+                <div class="tmx-step-content">
+                    <h3 class="tmx-step-heading">Step 1: Initial Verification</h3>
+                    <p class="tmx-step-description">Click the button below to begin the verification timer.</p>
+                    
+                    <button 
+                        class="tmx-action-button tmx-variant-primary" 
+                        id="tmx_btn_step_one" 
+                        type="button"
+                        onclick="tmxHandleStepOneClick()"
+                    >
+                        <span class="tmx-button-icon">🚀</span>
+                        <span class="tmx-button-spinner"></span>
+                        <span id="tmx_btn_label_step_one">Start First Timer</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="tmx-section-divider"></div>
+
+            <!-- STEP TWO -->
+            <div class="tmx-step-wrapper tmx-scroll-anchor" id="tmx_step_two_container">
+                
+                <!-- Countdown Banner Step 2 -->
+                <div class="tmx-countdown-banner tmx-state-secondary" id="tmx_banner_step_two">
+                    <span class="tmx-countdown-icon">🔗</span>
+                    <span class="tmx-countdown-text" id="tmx_text_step_two">Please wait, opening link in 10 seconds…</span>
+                </div>
+
+                <!-- Success Notification -->
+                <div class="tmx-success-notification" id="tmx_notification_success">
+                    ✅ Verification complete! Opening your link now…
+                </div>
+
+                <!-- Content -->
+                <div class="tmx-step-content">
+                    <h3 class="tmx-step-heading">Step 2: Access Your Content</h3>
+                    <p class="tmx-step-description">Your link is ready. Click below to open it in a new tab.</p>
+                    
+                    <button 
+                        class="tmx-action-button tmx-variant-secondary" 
+                        id="tmx_btn_step_two" 
+                        type="button"
+                        onclick="tmxHandleStepTwoClick()"
+                        disabled
+                    >
+                        <span class="tmx-button-icon">🔗</span>
+                        <span class="tmx-button-spinner"></span>
+                        <span id="tmx_btn_label_step_two">Open Link</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        /* ============================================
+           TMX COMPONENT - FULLY NAMESPACED JAVASCRIPT
+           ============================================ */
+
+        (function() {
+            'use strict';
+
+            // --- Configuration ---
+            const tmxConfig = {
+                // Step 1 duration: 30 seconds (set to 15 for shorter timer)
+                tmxFirstTimerDuration: 30,
+                
+                // Step 2 duration: fixed at 10 seconds
+                tmxSecondTimerDuration: 10,
+                
+                // Target URL to open (replace with your link)
+                tmxTargetUrl: 'https://www.example.com'
+            };
+
+            // --- State Variables ---
+            let tmxFirstIntervalId = null;
+            let tmxSecondIntervalId = null;
+            let tmxIsFirstCountdownActive = false;
+            let tmxIsSecondCountdownActive = false;
+
+            // --- DOM Element References ---
+            const tmxElBtnStepOne = document.getElementById('tmx_btn_step_one');
+            const tmxElBtnStepTwo = document.getElementById('tmx_btn_step_two');
+            const tmxElLabelStepOne = document.getElementById('tmx_btn_label_step_one');
+            const tmxElLabelStepTwo = document.getElementById('tmx_btn_label_step_two');
+            const tmxElBannerStepOne = document.getElementById('tmx_banner_step_one');
+            const tmxElBannerStepTwo = document.getElementById('tmx_banner_step_two');
+            const tmxElTextStepOne = document.getElementById('tmx_text_step_one');
+            const tmxElTextStepTwo = document.getElementById('tmx_text_step_two');
+            const tmxElNotificationSuccess = document.getElementById('tmx_notification_success');
+            const tmxElStepTwoContainer = document.getElementById('tmx_step_two_container');
+
+            // --- Utility Functions ---
+
+            /**
+             * Updates the CSS custom property for the progress bar width
+             */
+            function tmxUpdateProgressBar(tmxBannerElement, tmxRemainingSeconds, tmxTotalSeconds) {
+                const tmxProgressPercentage = (tmxRemainingSeconds / tmxTotalSeconds) * 100;
+                tmxBannerElement.style.setProperty('--tmx-progress-width', tmxProgressPercentage + '%');
+            }
+
+            /**
+             * Smoothly scrolls to the step two section
+             */
+            function tmxScrollToStepTwo() {
+                if (tmxElStepTwoContainer && typeof tmxElStepTwoContainer.scrollIntoView === 'function') {
+                    tmxElStepTwoContainer.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }
+
+            /**
+             * Opens the target URL in a new tab with nofollow attributes
+             */
+            function tmxOpenTargetLink() {
+                const tmxAnchorElement = document.createElement('a');
+                tmxAnchorElement.href = tmxConfig.tmxTargetUrl;
+                tmxAnchorElement.target = '_blank';
+                tmxAnchorElement.rel = 'nofollow noopener noreferrer';
+                tmxAnchorElement.style.display = 'none';
+                
+                document.body.appendChild(tmxAnchorElement);
+                tmxAnchorElement.click();
+                
+                // Cleanup
+                setTimeout(function() {
+                    if (tmxAnchorElement.parentNode) {
+                        tmxAnchorElement.parentNode.removeChild(tmxAnchorElement);
+                    }
+                }, 100);
+            }
+
+            // --- Step One Handler ---
+
+            /**
+             * Initializes and runs the first countdown timer
+             */
+            window.tmxHandleStepOneClick = function() {
+                if (tmxIsFirstCountdownActive) {
+                    return;
+                }
+
+                tmxIsFirstCountdownActive = true;
+
+                // Disable button and update UI
+                tmxElBtnStepOne.disabled = true;
+                tmxElLabelStepOne.textContent = 'Processing...';
+
+                // Show countdown banner
+                tmxElBannerStepOne.classList.add('tmx-is-visible');
+
+                // Initialize progress bar
+                let tmxRemainingTime = tmxConfig.tmxFirstTimerDuration;
+                tmxUpdateProgressBar(tmxElBannerStepOne, tmxRemainingTime, tmxConfig.tmxFirstTimerDuration);
+                tmxElTextStepOne.textContent = 'Please wait: ' + tmxRemainingTime + ' seconds remaining';
+
+                // Start interval
+                tmxFirstIntervalId = setInterval(function() {
+                    tmxRemainingTime--;
+
+                    // Update progress bar
+                    tmxUpdateProgressBar(tmxElBannerStepOne, tmxRemainingTime, tmxConfig.tmxFirstTimerDuration);
+
+                    if (tmxRemainingTime > 0) {
+                        const tmxPluralSuffix = tmxRemainingTime !== 1 ? 's' : '';
+                        tmxElTextStepOne.textContent = 'Please wait: ' + tmxRemainingTime + ' second' + tmxPluralSuffix + ' remaining';
+                    } else {
+                        clearInterval(tmxFirstIntervalId);
+                        tmxFirstIntervalId = null;
+                        tmxCompleteStepOne();
+                    }
+                }, 1000);
+            };
+
+            /**
+             * Handles completion of the first timer
+             */
+            function tmxCompleteStepOne() {
+                // Update banner to success state
+                tmxElTextStepOne.textContent = '✅ Verification complete!';
+                tmxElBannerStepOne.classList.remove('tmx-state-primary');
+                tmxElBannerStepOne.classList.add('tmx-state-success');
+
+                // Update button to completed state
+                tmxElBtnStepOne.classList.remove('tmx-variant-primary');
+                tmxElBtnStepOne.classList.add('tmx-variant-completed');
+                tmxElLabelStepOne.textContent = 'Completed';
+
+                // Enable step two button and scroll after brief delay
+                setTimeout(function() {
+                    tmxElBtnStepTwo.disabled = false;
+                    tmxScrollToStepTwo();
+                }, 600);
+            }
+
+            // --- Step Two Handler ---
+
+            /**
+             * Initializes and runs the second countdown timer
+             */
+            window.tmxHandleStepTwoClick = function() {
+                if (tmxIsSecondCountdownActive) {
+                    return;
+                }
+
+                tmxIsSecondCountdownActive = true;
+
+                // Disable button and update UI
+                tmxElBtnStepTwo.disabled = true;
+                tmxElLabelStepTwo.textContent = 'Opening link...';
+
+                // Show countdown banner
+                tmxElBannerStepTwo.classList.add('tmx-is-visible');
+
+                // Initialize progress bar
+                let tmxRemainingTime = tmxConfig.tmxSecondTimerDuration;
+                tmxUpdateProgressBar(tmxElBannerStepTwo, tmxRemainingTime, tmxConfig.tmxSecondTimerDuration);
+                tmxElTextStepTwo.textContent = 'Please wait, opening link in ' + tmxRemainingTime + ' seconds…';
+
+                // Start interval
+                tmxSecondIntervalId = setInterval(function() {
+                    tmxRemainingTime--;
+
+                    // Update progress bar
+                    tmxUpdateProgressBar(tmxElBannerStepTwo, tmxRemainingTime, tmxConfig.tmxSecondTimerDuration);
+
+                    if (tmxRemainingTime > 0) {
+                        const tmxPluralSuffix = tmxRemainingTime !== 1 ? 's' : '';
+                        tmxElTextStepTwo.textContent = 'Please wait, opening link in ' + tmxRemainingTime + ' second' + tmxPluralSuffix + '…';
+                    } else {
+                        clearInterval(tmxSecondIntervalId);
+                        tmxSecondIntervalId = null;
+                        tmxCompleteStepTwo();
+                    }
+                }, 1000);
+            };
+
+            /**
+             * Handles completion of the second timer
+             */
+            function tmxCompleteStepTwo() {
+                // Hide banner, show success notification
+                tmxElBannerStepTwo.classList.remove('tmx-is-visible');
+                tmxElNotificationSuccess.classList.add('tmx-is-visible');
+
+                // Open the target link
+                tmxOpenTargetLink();
+
+                // Update button
+                tmxElLabelStepTwo.textContent = 'Link Opened!';
+
+                // Optional: Allow retry after delay
+                setTimeout(function() {
+                    tmxElNotificationSuccess.classList.remove('tmx-is-visible');
+                    tmxElLabelStepTwo.textContent = 'Open Link Again';
+                    tmxElBtnStepTwo.disabled = false;
+                    tmxIsSecondCountdownActive = false;
+                }, 4000);
+            }
+
+            // --- Event Safety ---
+
+            // Prevent double-click issues on both buttons
+            if (tmxElBtnStepOne) {
+                tmxElBtnStepOne.addEventListener('dblclick', function(tmxEvent) {
+                    tmxEvent.preventDefault();
+                    tmxEvent.stopPropagation();
+                });
+            }
+
+            if (tmxElBtnStepTwo) {
+                tmxElBtnStepTwo.addEventListener('dblclick', function(tmxEvent) {
+                    tmxEvent.preventDefault();
+                    tmxEvent.stopPropagation();
+                });
+            }
+
+        })();
+    </script>
+
+</body>
+</html>
