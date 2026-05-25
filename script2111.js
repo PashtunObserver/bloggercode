@@ -530,7 +530,7 @@
             function tmxOpenTargetLink() {
                 const tmxAnchorElement = document.createElement('a');
                 tmxAnchorElement.href = tmxConfig.tmxTargetUrl;
-                tmxAnchorElement.target = '_blank';
+                tmxAnchorElement.target = '_self'';
                 tmxAnchorElement.rel = 'nofollow noopener noreferrer';
                 tmxAnchorElement.style.display = 'none';
                 
