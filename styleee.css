@@ -1,0 +1,703 @@
+/* ───────────────────────────────────────────────
+   ForumX Q&A Section — Scoped Styles
+   Prefix: forumx-
+   No generic class names. No Bootstrap.
+   ─────────────────────────────────────────────── */
+
+/* ── Reset & Base ── */
+.forumx-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1a1a2e;
+  line-height: 1.6;
+  box-sizing: border-box;
+}
+
+.forumx-container *,
+.forumx-container *::before,
+.forumx-container *::after {
+  box-sizing: inherit;
+}
+
+.forumx-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ── Question Card ── */
+.forumx-question-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.forumx-question-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.forumx-question-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #6366f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.forumx-question-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.forumx-question-username {
+  font-weight: 600;
+  font-size: 15px;
+  color: #1e293b;
+}
+
+.forumx-question-time {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.forumx-question-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.forumx-question-text {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.7;
+}
+
+/* ── Action Buttons Row ── */
+.forumx-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.forumx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  user-select: none;
+}
+
+.forumx-btn--ask {
+  background: #6366f1;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.forumx-btn--ask:hover {
+  background: #4f46e5;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.45);
+  transform: translateY(-2px);
+}
+
+.forumx-btn--reply {
+  background: #10b981;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.forumx-btn--reply:hover {
+  background: #059669;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.45);
+  transform: translateY(-2px);
+}
+
+.forumx-btn--like {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.forumx-btn--like:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  box-shadow: 0 2px 12px rgba(239, 68, 68, 0.2);
+  transform: translateY(-2px);
+}
+
+.forumx-btn--unlike {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.forumx-btn--unlike:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 12px rgba(100, 116, 139, 0.2);
+  transform: translateY(-2px);
+}
+
+.forumx-btn-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* ── Answers Section ── */
+.forumx-answers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.forumx-answer {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: forumx-fade-up 0.5s ease forwards;
+}
+
+.forumx-answer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+.forumx-answer:nth-child(1) { animation-delay: 0.1s; }
+.forumx-answer:nth-child(2) { animation-delay: 0.25s; }
+.forumx-answer:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes forumx-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Best Answer Highlight */
+.forumx-answer--best {
+  border-left: 4px solid #10b981;
+  position: relative;
+}
+
+.forumx-answer--best::before {
+  content: '✓ Best Answer';
+  position: absolute;
+  top: -1px;
+  right: 24px;
+  background: #10b981;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 0 0 8px 8px;
+  letter-spacing: 0.3px;
+}
+
+/* ── Answer Header ── */
+.forumx-answer-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.forumx-answer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.forumx-answer-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.forumx-answer-username {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.forumx-answer-time {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ── Answer Body ── */
+.forumx-answer-text {
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* ── Answer Footer ── */
+.forumx-answer-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .forumx-inner {
+ 
+  }
+
+  .forumx-question-card {
+    padding: 20px 18px;
+  }
+
+  .forumx-question-title {
+    font-size: 18px;
+  }
+
+  .forumx-actions-row {
+    flex-direction: column;
+  }
+
+  .forumx-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .forumx-answer {
+    padding: 18px 16px;
+  }
+
+  .forumx-answer--best::before {
+    right: 12px;
+    font-size: 10px;
+    padding: 3px 10px;
+  }
+
+  .forumx-answer-footer {
+    flex-direction: column;
+  }
+
+  .forumx-answer-footer .forumx-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .forumx-question-title {
+    font-size: 16px;
+  }
+
+  .forumx-question-text,
+  .forumx-answer-text {
+    font-size: 14px;
+  }
+}
+
+
+
+
+
+
+
+/* ============================================
+   ROBOTS.TXT GENERATOR WIDGET STYLES
+   Prefix: rbxGen_ 
+   Scope: Self-contained, conflict-free
+   ============================================ */
+
+/* --- Container & Layout --- */
+.rbxGen-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+  --rbxGen-primary: #2563eb;
+  --rbxGen-primaryHover: #1d4ed8;
+  --rbxGen-success: #10b981;
+  --rbxGen-danger: #ef4444;
+  --rbxGen-warning: #f59e0b;
+  --rbxGen-bg: #ffffff;
+  --rbxGen-surface: #f8fafc;
+  --rbxGen-border: #e2e8f0;
+  --rbxGen-text: #1e293b;
+  --rbxGen-textLight: #64748b;
+  --rbxGen-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --rbxGen-radius: 12px;
+  --rbxGen-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rbxGen-container * {
+  box-sizing: border-box;
+}
+
+/* --- Header --- */
+.rbxGen-header {
+  background: linear-gradient(135deg, var(--rbxGen-primary) 0%, #4f46e5 100%);
+  padding: 28px 24px;
+  text-align: center;
+  border-radius: var(--rbxGen-radius) var(--rbxGen-radius) 0 0;
+}
+
+.rbxGen-title {
+  margin: 0 0 8px 0;
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.rbxGen-subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* --- Content Area --- */
+.rbxGen-content {
+  background: var(--rbxGen-bg);
+  padding: 28px 24px;
+  border: 1px solid var(--rbxGen-border);
+  border-top: none;
+  border-radius: 0 0 var(--rbxGen-radius) var(--rbxGen-radius);
+}
+
+/* --- Sections --- */
+.rbxGen-section {
+  margin-bottom: 24px;
+}
+
+.rbxGen-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--rbxGen-text);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rbxGen-optional {
+  color: var(--rbxGen-textLight);
+  font-weight: 400;
+  font-size: 12px;
+  text-transform: none;
+}
+
+/* --- Inputs & Selects --- */
+.rbxGen-input,
+.rbxGen-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--rbxGen-border);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--rbxGen-text);
+  background: var(--rbxGen-bg);
+  transition: var(--rbxGen-transition);
+  outline: none;
+  font-family: inherit;
+}
+
+.rbxGen-input:focus,
+.rbxGen-select:focus {
+  border-color: var(--rbxGen-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.rbxGen-input::placeholder {
+  color: #94a3b8;
+}
+
+.rbxGen-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+/* --- Rule Rows --- */
+.rbxGen-rulesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rbxGen-ruleRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.rbxGen-ruleInput {
+  flex: 1;
+}
+
+/* --- Buttons --- */
+.rbxGen-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--rbxGen-transition);
+  font-family: inherit;
+  outline: none;
+}
+
+.rbxGen-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--rbxGen-shadow);
+}
+
+.rbxGen-btn:active {
+  transform: translateY(0);
+}
+
+.rbxGen-btnAdd {
+  margin-top: 10px;
+  background: #f1f5f9;
+  color: var(--rbxGen-text);
+  border: 2px dashed var(--rbxGen-border);
+  width: 100%;
+}
+
+.rbxGen-btnAdd:hover {
+  background: #e2e8f0;
+  border-color: var(--rbxGen-primary);
+  color: var(--rbxGen-primary);
+}
+
+.rbxGen-btnRemove {
+  padding: 10px 14px;
+  background: #fee2e2;
+  color: var(--rbxGen-danger);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.rbxGen-btnRemove:hover {
+  background: var(--rbxGen-danger);
+  color: #ffffff;
+}
+
+.rbxGen-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.rbxGen-btnGenerate {
+  flex: 1;
+  min-width: 180px;
+  background: linear-gradient(135deg, var(--rbxGen-primary) 0%, #4f46e5 100%);
+  color: #ffffff;
+  padding: 14px 24px;
+  font-size: 16px;
+}
+
+.rbxGen-btnGenerate:hover {
+  background: linear-gradient(135deg, var(--rbxGen-primaryHover) 0%, #4338ca 100%);
+}
+
+.rbxGen-btnReset {
+  flex: 1;
+  min-width: 140px;
+  background: var(--rbxGen-surface);
+  color: var(--rbxGen-textLight);
+  border: 2px solid var(--rbxGen-border);
+}
+
+.rbxGen-btnReset:hover {
+  background: #f1f5f9;
+  color: var(--rbxGen-text);
+}
+
+.rbxGen-btnCopy {
+  background: var(--rbxGen-success);
+  color: #ffffff;
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+.rbxGen-btnCopy:hover {
+  background: #059669;
+}
+
+/* --- Error Container --- */
+.rbxGen-errorContainer {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: var(--rbxGen-danger);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.rbxGen-errorContainer ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* --- Output Section --- */
+.rbxGen-outputSection {
+  margin-top: 28px;
+  animation: rbxGen-fadeIn 0.4s ease-out;
+}
+
+@keyframes rbxGen-fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rbxGen-outputHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rbxGen-outputTitle {
+  margin: 0;
+  color: var(--rbxGen-text);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.rbxGen-outputCode {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border: 1px solid #1e293b;
+  margin: 0;
+}
+
+/* --- Copy Feedback --- */
+.rbxGen-copyFeedback {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #ecfdf5;
+  color: var(--rbxGen-success);
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  animation: rbxGen-fadeIn 0.3s ease-out;
+}
+
+/* --- Footer --- */
+.rbxGen-footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--rbxGen-textLight);
+  font-size: 12px;
+  border-top: 1px solid var(--rbxGen-border);
+}
+
+/* --- Utility Classes --- */
+.rbxGen-hidden {
+  display: none !important;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 640px) {
+  .rbxGen-header {
+    padding: 20px 16px;
+  }
+  
+  .rbxGen-title {
+    font-size: 22px;
+  }
+  
+  .rbxGen-content {
+    padding: 20px 16px;
+  }
+  
+  .rbxGen-actions {
+    flex-direction: column;
+  }
+  
+  .rbxGen-btnGenerate,
+  .rbxGen-btnReset {
+    width: 100%;
+  }
+  
+  .rbxGen-outputHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --- Focus Accessibility --- */
+.rbxGen-input:focus-visible,
+.rbxGen-select:focus-visible,
+.rbxGen-btn:focus-visible {
+  outline: 2px solid var(--rbxGen-primary);
+  outline-offset: 2px;
+}
+
+/* --- Disabled State --- */
+.rbxGen-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
