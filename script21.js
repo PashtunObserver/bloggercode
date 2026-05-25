@@ -478,20 +478,16 @@
  /* ============================================
            TMX COMPONENT - FULLY NAMESPACED JAVASCRIPT
            ============================================ */
-
         (function() {
             'use strict';
 
-            // --- Configuration ---
+            // --- Read Configuration from HTML Data Attributes ---
+            const tmxRootElement = document.getElementById('tmx_root_wrapper');
+            
             const tmxConfig = {
-                // Step 1 duration: 30 seconds (set to 15 for shorter timer)
-                tmxFirstTimerDuration: 30,
-                
-                // Step 2 duration: fixed at 10 seconds
-                tmxSecondTimerDuration: 10,
-                
-                // Target URL to open (replace with your link)
-                tmxTargetUrl: 'https://www.example.com'
+                tmxTargetUrl: tmxRootElement.getAttribute('data-tmx-target-url') || 'https://www.example.com',
+                tmxFirstTimerDuration: parseInt(tmxRootElement.getAttribute('data-tmx-first-timer'), 10) || 30,
+                tmxSecondTimerDuration: 10
             };
 
             // --- State Variables ---
@@ -514,17 +510,11 @@
 
             // --- Utility Functions ---
 
-            /**
-             * Updates the CSS custom property for the progress bar width
-             */
             function tmxUpdateProgressBar(tmxBannerElement, tmxRemainingSeconds, tmxTotalSeconds) {
                 const tmxProgressPercentage = (tmxRemainingSeconds / tmxTotalSeconds) * 100;
                 tmxBannerElement.style.setProperty('--tmx-progress-width', tmxProgressPercentage + '%');
             }
 
-            /**
-             * Smoothly scrolls to the step two section
-             */
             function tmxScrollToStepTwo() {
                 if (tmxElStepTwoContainer && typeof tmxElStepTwoContainer.scrollIntoView === 'function') {
                     tmxElStepTwoContainer.scrollIntoView({
@@ -534,9 +524,6 @@
                 }
             }
 
-            /**
-             * Opens the target URL in a new tab with nofollow attributes
-             */
             function tmxOpenTargetLink() {
                 const tmxAnchorElement = document.createElement('a');
                 tmxAnchorElement.href = tmxConfig.tmxTargetUrl;
@@ -547,7 +534,6 @@
                 document.body.appendChild(tmxAnchorElement);
                 tmxAnchorElement.click();
                 
-                // Cleanup
                 setTimeout(function() {
                     if (tmxAnchorElement.parentNode) {
                         tmxAnchorElement.parentNode.removeChild(tmxAnchorElement);
@@ -557,33 +543,22 @@
 
             // --- Step One Handler ---
 
-            /**
-             * Initializes and runs the first countdown timer
-             */
             window.tmxHandleStepOneClick = function() {
                 if (tmxIsFirstCountdownActive) {
                     return;
                 }
 
                 tmxIsFirstCountdownActive = true;
-
-                // Disable button and update UI
                 tmxElBtnStepOne.disabled = true;
                 tmxElLabelStepOne.textContent = 'Processing...';
-
-                // Show countdown banner
                 tmxElBannerStepOne.classList.add('tmx-is-visible');
 
-                // Initialize progress bar
                 let tmxRemainingTime = tmxConfig.tmxFirstTimerDuration;
                 tmxUpdateProgressBar(tmxElBannerStepOne, tmxRemainingTime, tmxConfig.tmxFirstTimerDuration);
                 tmxElTextStepOne.textContent = 'Please wait: ' + tmxRemainingTime + ' seconds remaining';
 
-                // Start interval
                 tmxFirstIntervalId = setInterval(function() {
                     tmxRemainingTime--;
-
-                    // Update progress bar
                     tmxUpdateProgressBar(tmxElBannerStepOne, tmxRemainingTime, tmxConfig.tmxFirstTimerDuration);
 
                     if (tmxRemainingTime > 0) {
@@ -597,21 +572,15 @@
                 }, 1000);
             };
 
-            /**
-             * Handles completion of the first timer
-             */
             function tmxCompleteStepOne() {
-                // Update banner to success state
                 tmxElTextStepOne.textContent = '✅ Verification complete!';
                 tmxElBannerStepOne.classList.remove('tmx-state-primary');
                 tmxElBannerStepOne.classList.add('tmx-state-success');
 
-                // Update button to completed state
                 tmxElBtnStepOne.classList.remove('tmx-variant-primary');
                 tmxElBtnStepOne.classList.add('tmx-variant-completed');
                 tmxElLabelStepOne.textContent = 'Completed';
 
-                // Enable step two button and scroll after brief delay
                 setTimeout(function() {
                     tmxElBtnStepTwo.disabled = false;
                     tmxScrollToStepTwo();
@@ -620,33 +589,22 @@
 
             // --- Step Two Handler ---
 
-            /**
-             * Initializes and runs the second countdown timer
-             */
             window.tmxHandleStepTwoClick = function() {
                 if (tmxIsSecondCountdownActive) {
                     return;
                 }
 
                 tmxIsSecondCountdownActive = true;
-
-                // Disable button and update UI
                 tmxElBtnStepTwo.disabled = true;
                 tmxElLabelStepTwo.textContent = 'Opening link...';
-
-                // Show countdown banner
                 tmxElBannerStepTwo.classList.add('tmx-is-visible');
 
-                // Initialize progress bar
                 let tmxRemainingTime = tmxConfig.tmxSecondTimerDuration;
                 tmxUpdateProgressBar(tmxElBannerStepTwo, tmxRemainingTime, tmxConfig.tmxSecondTimerDuration);
                 tmxElTextStepTwo.textContent = 'Please wait, opening link in ' + tmxRemainingTime + ' seconds…';
 
-                // Start interval
                 tmxSecondIntervalId = setInterval(function() {
                     tmxRemainingTime--;
-
-                    // Update progress bar
                     tmxUpdateProgressBar(tmxElBannerStepTwo, tmxRemainingTime, tmxConfig.tmxSecondTimerDuration);
 
                     if (tmxRemainingTime > 0) {
@@ -660,21 +618,14 @@
                 }, 1000);
             };
 
-            /**
-             * Handles completion of the second timer
-             */
             function tmxCompleteStepTwo() {
-                // Hide banner, show success notification
                 tmxElBannerStepTwo.classList.remove('tmx-is-visible');
                 tmxElNotificationSuccess.classList.add('tmx-is-visible');
 
-                // Open the target link
                 tmxOpenTargetLink();
 
-                // Update button
                 tmxElLabelStepTwo.textContent = 'Link Opened!';
 
-                // Optional: Allow retry after delay
                 setTimeout(function() {
                     tmxElNotificationSuccess.classList.remove('tmx-is-visible');
                     tmxElLabelStepTwo.textContent = 'Open Link Again';
@@ -685,7 +636,6 @@
 
             // --- Event Safety ---
 
-            // Prevent double-click issues on both buttons
             if (tmxElBtnStepOne) {
                 tmxElBtnStepOne.addEventListener('dblclick', function(tmxEvent) {
                     tmxEvent.preventDefault();
@@ -701,3 +651,9 @@
             }
 
         })();
+
+
+
+
+
+
