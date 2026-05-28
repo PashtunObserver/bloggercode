@@ -1,0 +1,43 @@
+<!-- ============================================
+WEATHER WIDGET - BLOGGER HTML SNIPPET
+     Paste this into your Blogger HTML/JavaScript gadget
+     or inside a blog post (HTML view)
+
+     CHANGE CITY: Edit data-city="YourCity" below
+     ============================================ -->
+
+<!-- Widget Container -->
+<!-- Change 'Shangla' to your desired city name -->
+<div class="kw-weather-widget-container" data-city="Shangla">
+    <div class="kw-weather-card">
+        <div class="kw-loading">
+            <div class="kw-spinner"></div>
+            <p>Loading weather...</p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function () {
+  // Add CSS file to <head>
+  var css = document.createElement("link");
+  css.rel = "stylesheet";
+  css.href = "https://cdn.jsdelivr.net/gh/PashtunObserver/bloggercode@master/4wu.css";
+  document.head.appendChild(css);
+
+  // Add JS file to <body>
+  var js = document.createElement("script");
+  js.src = "https://cdn.jsdelivr.net/gh/PashtunObserver/bloggercode@master/4w.js";
+  js.defer = true;
+
+  // Wait until body exists
+  if (document.body) {
+    document.body.appendChild(js);
+  } else {
+    document.addEventListener("DOMContentLoaded", function () {
+      document.body.appendChild(js);
+    });
+  }
+})();
+</script>
