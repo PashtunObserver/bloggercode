@@ -8,11 +8,10 @@
 /* --- Widget Container (scoped wrapper) --- */
 .kw-weather-widget-container {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 0;
     /* Reset any inherited styles that might conflict */
     margin: 0;
     border: none;
