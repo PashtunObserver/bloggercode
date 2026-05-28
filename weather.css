@@ -1,0 +1,248 @@
+/* ============================================
+   WEATHER WIDGET - BLOGGER SAFE CSS
+   This CSS is scoped to ONLY affect elements
+   inside .kw-weather-widget-container
+   ============================================ */
+
+/* --- Widget Container (scoped wrapper) --- */
+.kw-weather-widget-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    /* Reset any inherited styles that might conflict */
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+}
+
+.kw-weather-widget-container * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Weather Card --- */
+.kw-weather-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 24px 28px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+/* --- Weather Badge --- */
+.kw-weather-badge {
+    display: inline-block;
+    background: #ff1744;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+}
+
+/* --- Main Weather Section --- */
+.kw-main-weather {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 0 2px;
+}
+
+.kw-weather-icon-main {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+}
+
+.kw-weather-icon-main svg,
+.kw-weather-icon-main img {
+    width: 60px;
+    height: 60px;
+}
+
+.kw-temperature {
+    font-size: 56px;
+    font-weight: 600;
+    color: #222;
+    line-height: 1;
+    display: flex;
+    align-items: flex-start;
+    margin-right: 4px;
+}
+
+.kw-temperature .kw-degree {
+    font-size: 20px;
+    font-weight: 400;
+    color: #222;
+    margin-left: 3px;
+    margin-top: 6px;
+    vertical-align: super;
+}
+
+/* --- Location & Details --- */
+.kw-location-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 2px;
+}
+
+.kw-location-info {
+    flex: 1;
+}
+
+.kw-city-input {
+    font-size: 26px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 3px;
+    line-height: 1.2;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: text;
+    min-width: 120px;
+    display: inline-block;
+}
+
+.kw-city-input:hover {
+    background: #f5f5f5;
+    border-radius: 4px;
+    padding: 0 4px;
+    margin-left: -4px;
+}
+
+.kw-city-input:focus {
+    background: #fff3f5;
+    border-radius: 4px;
+    padding: 0 4px;
+    margin-left: -4px;
+    box-shadow: 0 0 0 2px #ff1744;
+}
+
+.kw-city-input:empty::before {
+    content: 'Enter city...';
+    color: #bbb;
+    font-weight: 400;
+}
+
+.kw-condition-text {
+    font-size: 13px;
+    color: #bbb;
+    font-weight: 400;
+    padding-left: 2px;
+}
+
+.kw-details-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    margin-top: 2px;
+}
+
+.kw-temp-range-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+.kw-arrow-up {
+    color: #ff5252;
+    font-size: 13px;
+    animation: kw-bounceUp 1.5s ease-in-out infinite;
+}
+
+.kw-arrow-down {
+    color: #448aff;
+    font-size: 13px;
+    animation: kw-bounceDown 1.5s ease-in-out infinite;
+}
+
+@keyframes kw-bounceUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes kw-bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+}
+
+.kw-temp-high {
+    color: #555;
+    font-weight: 500;
+}
+
+.kw-temp-separator {
+    color: #ccc;
+    font-weight: 300;
+}
+
+.kw-temp-low {
+    color: #555;
+    font-weight: 500;
+}
+
+.kw-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #666;
+}
+
+.kw-detail-icon {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Loading --- */
+.kw-loading {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+}
+
+.kw-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #eee;
+    border-top-color: #ff1744;
+    border-radius: 50%;
+    animation: kw-spin 0.8s linear infinite;
+    margin: 0 auto 10px;
+}
+
+@keyframes kw-spin {
+    to { transform: rotate(360deg); }
+}
+
+.kw-error-msg {
+    text-align: center;
+    color: #e74c3c;
+    padding: 20px;
+    font-size: 14px;
+}
+
+.kw-hint {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 4px;
+    padding-left: 2px;
+}
