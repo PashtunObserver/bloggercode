@@ -9,7 +9,7 @@
     // Scoped variables - no globals
     const weatherApiKey = 'b56d79dc3aa5418699182727262705';
     const weatherApiUrl = 'https://api.weatherapi.com/v1/current.json?key=';
-    let currentCity = 'Shangla';
+    let currentCity = 'Lahore';
 
     // Find all widget containers on the page
     const containers = document.querySelectorAll('.kw-weather-widget-container');
