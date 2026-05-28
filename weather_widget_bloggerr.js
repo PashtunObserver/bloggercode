@@ -1,5 +1,5 @@
 /* ============================================
-   WEATHER WIDGET - BLOGGER SAFE JS
+   WEATHER WIDGET - BLOGGER SAFE JS 
    All variables scoped inside IIFE
    No global namespace pollution
    ============================================ */ 
