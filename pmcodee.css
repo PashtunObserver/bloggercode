@@ -1,0 +1,430 @@
+/* ═══════════════════════════════════════════════════════════════
+   PMCODE SYNTAX HIGHLIGHTER WIDGET - CSS
+   Version: 2.0
+   Description: Styles for PMCODE Blogger Widget
+   Host this on GitHub and link in your Blogger theme
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Root Variables ─── */
+:root {
+  --pmcode-bg-primary: #0d1117;
+  --pmcode-bg-header: #161b22;
+  --pmcode-bg-code: #0d1117;
+  --pmcode-bg-line: #0d1117;
+  --pmcode-bg-hover: #161b22;
+  --pmcode-border: #30363d;
+  --pmcode-text-primary: #c9d1d9;
+  --pmcode-text-secondary: #8b949e;
+  --pmcode-text-muted: #484f58;
+  --pmcode-accent: #58a6ff;
+  --pmcode-success: #3fb950;
+  --pmcode-success-bg: rgba(63, 185, 80, 0.15);
+  --pmcode-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --pmcode-radius: 12px;
+  --pmcode-font-mono: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', 'Monaco', monospace;
+  --pmcode-font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ─── Widget Container ─── */
+.pmcode-block {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: none !important;
+  box-sizing: border-box !important;
+  font-family: var(--pmcode-font-ui) !important;
+  line-height: 1.6 !important;
+  color: var(--pmcode-text-primary) !important;
+  overflow: visible !important;
+}
+
+/* ─── Code Card ─── */
+.pmcode-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 20px 0 !important;
+  padding: 0 !important;
+  border: 1px solid var(--pmcode-border) !important;
+  border-radius: var(--pmcode-radius) !important;
+  background: var(--pmcode-bg-primary) !important;
+  box-shadow: var(--pmcode-shadow) !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  font-family: var(--pmcode-font-ui) !important;
+  transition: box-shadow 0.3s ease !important;
+}
+
+.pmcode-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* ─── Header ─── */
+.pmcode-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  background: var(--pmcode-bg-header) !important;
+  border-bottom: 1px solid var(--pmcode-border) !important;
+  box-sizing: border-box !important;
+  font-family: var(--pmcode-font-ui) !important;
+}
+
+.pmcode-header-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ─── Window Dots ─── */
+.pmcode-dots {
+  display: flex !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.pmcode-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: default !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.pmcode-dot:hover {
+  transform: scale(1.15) !important;
+}
+
+.pmcode-dot-red { background: #ff5f56 !important; }
+.pmcode-dot-yellow { background: #ffbd2e !important; }
+.pmcode-dot-green { background: #27c93f !important; }
+
+/* ─── Language Badge ─── */
+.pmcode-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 3px 10px !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  font-family: var(--pmcode-font-ui) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  line-height: 1 !important;
+  border: none !important;
+  flex-shrink: 0 !important;
+}
+
+.pmcode-badge-js {
+  background: rgba(247, 223, 30, 0.12) !important;
+  color: #f7df1e !important;
+  border: 1px solid rgba(247, 223, 30, 0.25) !important;
+}
+
+.pmcode-badge-css {
+  background: rgba(38, 77, 228, 0.12) !important;
+  color: #61dafb !important;
+  border: 1px solid rgba(38, 77, 228, 0.25) !important;
+}
+
+.pmcode-badge-html {
+  background: rgba(227, 76, 38, 0.12) !important;
+  color: #e34c26 !important;
+  border: 1px solid rgba(227, 76, 38, 0.25) !important;
+}
+
+.pmcode-badge-general {
+  background: rgba(139, 148, 158, 0.12) !important;
+  color: #8b949e !important;
+  border: 1px solid rgba(139, 148, 158, 0.25) !important;
+}
+
+/* ─── Filename ─── */
+.pmcode-filename {
+  font-family: var(--pmcode-font-mono) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--pmcode-text-secondary) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 200px !important;
+}
+
+/* ─── Copy Button ─── */
+.pmcode-copy-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 6px 14px !important;
+  margin: 0 !important;
+  border: 1px solid var(--pmcode-border) !important;
+  border-radius: 8px !important;
+  background: var(--pmcode-bg-primary) !important;
+  color: var(--pmcode-text-secondary) !important;
+  font-family: var(--pmcode-font-ui) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+  outline: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+.pmcode-copy-btn:hover {
+  background: var(--pmcode-bg-hover) !important;
+  color: var(--pmcode-text-primary) !important;
+  border-color: var(--pmcode-accent) !important;
+  transform: translateY(-1px) !important;
+}
+
+.pmcode-copy-btn:active {
+  transform: translateY(0) !important;
+}
+
+.pmcode-copy-btn.pmcode-copied {
+  background: var(--pmcode-success-bg) !important;
+  color: var(--pmcode-success) !important;
+  border-color: var(--pmcode-success) !important;
+}
+
+.pmcode-copy-btn i {
+  font-size: 13px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+/* ─── Code Body ─── */
+.pmcode-body {
+  display: flex !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: var(--pmcode-bg-code) !important;
+  overflow-x: auto !important;
+  box-sizing: border-box !important;
+}
+
+.pmcode-body::-webkit-scrollbar {
+  height: 8px !important;
+}
+
+.pmcode-body::-webkit-scrollbar-track {
+  background: var(--pmcode-bg-code) !important;
+}
+
+.pmcode-body::-webkit-scrollbar-thumb {
+  background: var(--pmcode-border) !important;
+  border-radius: 4px !important;
+}
+
+.pmcode-body::-webkit-scrollbar-thumb:hover {
+  background: var(--pmcode-text-muted) !important;
+}
+
+/* ─── Line Numbers ─── */
+.pmcode-linenumbers {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  padding: 16px 12px 16px 16px !important;
+  margin: 0 !important;
+  background: var(--pmcode-bg-line) !important;
+  border-right: 1px solid var(--pmcode-border) !important;
+  color: var(--pmcode-text-muted) !important;
+  font-family: var(--pmcode-font-mono) !important;
+  font-size: 13px !important;
+  line-height: 1.8 !important;
+  user-select: none !important;
+  flex-shrink: 0 !important;
+  min-width: 40px !important;
+  box-sizing: border-box !important;
+}
+
+.pmcode-linenumbers span {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.8 !important;
+  font-family: var(--pmcode-font-mono) !important;
+  font-size: 13px !important;
+  color: var(--pmcode-text-muted) !important;
+  background: none !important;
+  border: none !important;
+}
+
+/* ─── Code Content ─── */
+.pmcode-content {
+  flex: 1 !important;
+  margin: 0 !important;
+  padding: 16px 20px !important;
+  overflow-x: auto !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+}
+
+.pmcode-content pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  font-family: var(--pmcode-font-mono) !important;
+  font-size: 13px !important;
+  line-height: 1.8 !important;
+  color: var(--pmcode-text-primary) !important;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  overflow-wrap: normal !important;
+  tab-size: 4 !important;
+  box-sizing: border-box !important;
+}
+
+.pmcode-content code {
+  font-family: var(--pmcode-font-mono) !important;
+  font-size: 13px !important;
+  line-height: 1.8 !important;
+  color: var(--pmcode-text-primary) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline !important;
+  white-space: pre !important;
+}
+
+/* ─── Syntax Highlighting Colors ─── */
+
+/* JavaScript */
+.pmcode-js .pmcode-kw { color: #ff7b72 !important; font-weight: 600 !important; }
+.pmcode-js .pmcode-str { color: #a5d6ff !important; }
+.pmcode-js .pmcode-cmt { color: #8b949e !important; font-style: italic !important; }
+.pmcode-js .pmcode-func { color: #d2a8ff !important; }
+.pmcode-js .pmcode-num { color: #79c0ff !important; }
+.pmcode-js .pmcode-op { color: #ff7b72 !important; }
+.pmcode-js .pmcode-var { color: #ffa657 !important; }
+.pmcode-js .pmcode-cls { color: #ffa657 !important; }
+.pmcode-js .pmcode-punc { color: #c9d1d9 !important; }
+.pmcode-js .pmcode-prop { color: #7ee787 !important; }
+
+/* CSS */
+.pmcode-css .pmcode-kw { color: #ff7b72 !important; font-weight: 600 !important; }
+.pmcode-css .pmcode-str { color: #a5d6ff !important; }
+.pmcode-css .pmcode-cmt { color: #8b949e !important; font-style: italic !important; }
+.pmcode-css .pmcode-func { color: #d2a8ff !important; }
+.pmcode-css .pmcode-num { color: #79c0ff !important; }
+.pmcode-css .pmcode-op { color: #ff7b72 !important; }
+.pmcode-css .pmcode-var { color: #7ee787 !important; }
+.pmcode-css .pmcode-cls { color: #ffa657 !important; }
+.pmcode-css .pmcode-punc { color: #c9d1d9 !important; }
+.pmcode-css .pmcode-prop { color: #7ee787 !important; }
+
+/* HTML */
+.pmcode-html .pmcode-kw { color: #ff7b72 !important; font-weight: 600 !important; }
+.pmcode-html .pmcode-str { color: #a5d6ff !important; }
+.pmcode-html .pmcode-cmt { color: #8b949e !important; font-style: italic !important; }
+.pmcode-html .pmcode-func { color: #d2a8ff !important; }
+.pmcode-html .pmcode-num { color: #79c0ff !important; }
+.pmcode-html .pmcode-op { color: #ff7b72 !important; }
+.pmcode-html .pmcode-var { color: #7ee787 !important; }
+.pmcode-html .pmcode-cls { color: #ffa657 !important; }
+.pmcode-html .pmcode-punc { color: #c9d1d9 !important; }
+.pmcode-html .pmcode-prop { color: #79c0ff !important; }
+
+/* General Code */
+.pmcode-general .pmcode-kw { color: #ff7b72 !important; font-weight: 600 !important; }
+.pmcode-general .pmcode-str { color: #a5d6ff !important; }
+.pmcode-general .pmcode-cmt { color: #8b949e !important; font-style: italic !important; }
+.pmcode-general .pmcode-func { color: #d2a8ff !important; }
+.pmcode-general .pmcode-num { color: #79c0ff !important; }
+.pmcode-general .pmcode-op { color: #ff7b72 !important; }
+.pmcode-general .pmcode-var { color: #ffa657 !important; }
+.pmcode-general .pmcode-cls { color: #ffa657 !important; }
+.pmcode-general .pmcode-punc { color: #c9d1d9 !important; }
+.pmcode-general .pmcode-prop { color: #7ee787 !important; }
+
+/* ─── Selection ─── */
+.pmcode-content ::selection,
+.pmcode-linenumbers ::selection {
+  background: rgba(88, 166, 255, 0.25) !important;
+  color: inherit !important;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .pmcode-card {
+    margin: 16px 0 !important;
+    border-radius: 10px !important;
+  }
+
+  .pmcode-header {
+    padding: 10px 12px !important;
+  }
+
+  .pmcode-filename {
+    max-width: 120px !important;
+    font-size: 12px !important;
+  }
+
+  .pmcode-copy-btn span {
+    display: none !important;
+  }
+
+  .pmcode-copy-btn {
+    padding: 6px 10px !important;
+  }
+
+  .pmcode-linenumbers {
+    padding: 12px 8px 12px 12px !important;
+    font-size: 12px !important;
+    min-width: 32px !important;
+  }
+
+  .pmcode-content {
+    padding: 12px 14px !important;
+  }
+
+  .pmcode-content pre,
+  .pmcode-content code {
+    font-size: 12px !important;
+    line-height: 1.7 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pmcode-dot {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .pmcode-header-left {
+    gap: 8px !important;
+  }
+
+  .pmcode-badge {
+    padding: 2px 8px !important;
+    font-size: 10px !important;
+  }
+}
