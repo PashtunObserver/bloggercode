@@ -412,7 +412,7 @@
             <div class="cv-link-wrap" id="cvLinkWrap">
                 <div class="cv-link-label">Your invite link</div>
 
-                <input class="cv-link-input" id="cvLinkInput" type="text" value="https://www.canva.com/brand/join?token=VhH2JT7FyzSwCrvT-8zD9w&brandingVariant=edu&referrer=team-invite" readonly />
+                <input class="cv-link-input" id="cvLinkInput" type="text" value="https://www.canva.com/brand/join?token=l5WFIkyNGPnlgHGyULCY3A&referrer=team-invite" readonly />
 
                 <button class="cv-copy-btn" id="cvCopyBtn">
                     <svg fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px" viewBox="0 0 486.465 486.465" xml:space="preserve">
